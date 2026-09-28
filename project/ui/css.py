@@ -11,14 +11,15 @@ custom_css = """
         width: 100% !important;
         margin: 0 auto !important;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-        background: #0f0f0f !important;
+        background: #eef4fb !important;
+        color: #1f2937 !important;
     }
     
     /* ============================================
        TABS
        ============================================ */
     button[role="tab"] {
-        color: #a3a3a3 !important;
+        color: #64748b !important;
         border-bottom: 2px solid transparent !important;
         border-radius: 0 !important;
         transition: all 0.2s ease !important;
@@ -26,12 +27,12 @@ custom_css = """
     }
     
     button[role="tab"]:hover {
-        color: #e5e5e5 !important;
+        color: #1d4ed8 !important;
     }
     
     button[role="tab"][aria-selected="true"] {
-        color: #ffffff !important;
-        border-bottom: 2px solid #ffffff !important;
+        color: #1d4ed8 !important;
+        border-bottom: 2px solid #2563eb !important;
         border-radius: 0 !important;
         background: transparent !important;
     }
@@ -42,7 +43,7 @@ custom_css = """
     }
     
     .tab-nav {
-        border-bottom: 1px solid #3f3f3f !important;
+        border-bottom: 1px solid #dbe3ee !important;
         border-radius: 0 !important;
     }
     
@@ -138,8 +139,8 @@ custom_css = """
        ============================================ */
     .file-preview, 
     [data-testid="file-upload"] {
-        background: #1a1a1a !important;
-        border: 1px solid #3f3f3f !important;
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
         border-radius: 5px !important;
         color: #ffffff !important;
         min-height: 200px !important;
@@ -148,12 +149,12 @@ custom_css = """
     .file-preview:hover, 
     [data-testid="file-upload"]:hover {
         border-color: #3b82f6 !important;
-        background: #1f1f1f !important;
+        background: #f8fbff !important;
     }
     
     .file-preview *,
     [data-testid="file-upload"] * {
-        color: #ffffff !important;
+        color: #334155 !important;
     }
     
     .file-preview .label,
@@ -166,10 +167,10 @@ custom_css = """
        ============================================ */
     input, 
     textarea {
-        background: #1a1a1a !important;
-        border: 1px solid #3f3f3f !important;
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
         border-radius: 10px !important;
-        color: #e5e5e5 !important;
+        color: #1f2937 !important;
         transition: border-color 0.2s ease !important;
     }
     
@@ -181,16 +182,16 @@ custom_css = """
     }
     
     textarea[readonly] {
-        background: #1a1a1a !important;
-        color: #a3a3a3 !important;
+        background: #f8fafc !important;
+        color: #64748b !important;
     }
     
     /* ============================================
        FILE LIST BOX
        ============================================ */
     #file-list-box {
-        background: #1a1a1a !important;
-        border: 1px solid #3f3f3f !important;
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
         border-radius: 5px !important;
         padding: 10px !important;
     }
@@ -198,7 +199,7 @@ custom_css = """
     #file-list-box textarea {
         background: transparent !important;
         border: none !important;
-        color: #e5e5e5 !important;
+        color: #334155 !important;
         padding: 0 !important;
     }
     
@@ -206,9 +207,10 @@ custom_css = """
        CHATBOT CONTAINER
        ============================================ */
     .chatbot {
-        border-radius: 5px !important;
-        background: #1a1a1a !important;
-        border: none !important;
+        border-radius: 12px !important;
+        background: #ffffff !important;
+        border: 1px solid #dbe3ee !important;
+        box-shadow: 0 8px 24px rgba(30, 64, 175, 0.08) !important;
     }
 
     .chatbot .message-wrap,
@@ -225,14 +227,19 @@ custom_css = """
     }
 
     .message.user {
-        background: #3b82f6 !important;
-        color: white !important;
+        background: #dbeafe !important;
+        color: #111827 !important;
+        border: 1px solid #bfdbfe !important;
+    }
+
+    .message.user * {
+        color: #111827 !important;
     }
     
     .message.bot {
-        background: #1f1f1f !important;
-        color: #e5e5e5 !important;
-        border: 1px solid #3f3f3f !important;
+        background: #f8fafc !important;
+        color: #1f2937 !important;
+        border: 1px solid #dbe3ee !important;
         width: fit-content !important;
         max-width: 90% !important;
     }
@@ -251,7 +258,7 @@ custom_css = """
     .progress-bar-wrap {
         border-radius: 10px !important;
         overflow: hidden !important;
-        background: #1a1a1a !important;
+        background: #e2e8f0 !important;
     }
 
     .progress-bar {
@@ -263,16 +270,25 @@ custom_css = """
        TYPOGRAPHY
        ============================================ */
     h1, h2, h3, h4, h5, h6 {
-        color: #e5e5e5 !important;
+        color: #172554 !important;
+    }
+
+    p, label, .prose {
+        color: #475569 !important;
+    }
+
+    ::placeholder {
+        color: #94a3b8 !important;
+        opacity: 1 !important;
     }
     
     /* ============================================
        GLOBAL OVERRIDES
        ============================================ */
-    * {
-        box-shadow: none !important;
+    body {
+        background: #eef4fb !important;
     }
-    
+
     footer {
         visibility: hidden;
     }

@@ -13,7 +13,11 @@ SPARSE_VECTOR_NAME = "sparse"
 # --- Model Configuration ---
 DENSE_MODEL = "sentence-transformers/all-mpnet-base-v2"
 SPARSE_MODEL = "Qdrant/bm25"
-LLM_MODEL = "qwen3:4b-instruct-2507-q4_K_M"
+
+# Agent 主模型：阿里云千问 API
+LLM_MODEL = "qwen3.8-max"
+
+
 JUDGE_MODEL = "ministral-3:3b-instruct-2512-q8_0"
 LLM_TEMPERATURE = 0
 LLM_SEED = 42

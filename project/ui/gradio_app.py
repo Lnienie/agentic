@@ -7,10 +7,10 @@ import os
 ASSETS_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 
 def create_gradio_ui():
-    rag_system = RAGSystem()
-    rag_system.initialize()
+    rag_system = RAGSystem()   #创建整个RAG核心系统
+    rag_system.initialize()    #初始化模型,数据库，agent
     
-    doc_manager = DocumentManager(rag_system)
+    doc_manager = DocumentManager(rag_system)   
     chat_interface = ChatInterface(rag_system)
     
     def format_file_list():

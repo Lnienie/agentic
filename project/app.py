@@ -17,7 +17,7 @@ for _key in ("NO_PROXY", "no_proxy"):
     os.environ[_key] = ",".join(sorted(_parts))
 
 from dotenv import load_dotenv
-load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"), override=True)
 
 # Keep the same HuggingFace model workflow, but use an accessible endpoint in restricted networks.
 os.environ.setdefault("HF_ENDPOINT", "https://huggingface.co")
