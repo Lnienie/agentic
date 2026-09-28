@@ -53,17 +53,17 @@ This repository demonstrates how to build an **Agentic RAG (Retrieval-Augmented 
 
 ### What's inside
 
-| Feature | Description |
-|---|---|
+| Feature                       | Description                                                                 |
+| ----------------------------- | --------------------------------------------------------------------------- |
 | 🗂️ **Hierarchical Indexing** | Search small chunks for precision, retrieve large Parent chunks for context |
-| 🧠 **Conversation Memory** | Maintains context across questions for natural dialogue |
-| ❓ **Query Clarification** | Rewrites ambiguous queries or pauses to ask the user for details |
-| 🤖 **Agent Orchestration** | LangGraph coordinates the full retrieval and reasoning workflow |
-| 🔀 **Multi-Agent Map-Reduce** | Decomposes complex queries into parallel sub-queries |
-| ✅ **Self-Correction** | Re-queries automatically if initial results are insufficient |
-| 🗜️ **Context Compression** | Keeps working memory lean across long retrieval loops |
-| 🔍 **Observability** | Track LLM calls, tool usage, and graph execution with Langfuse |
-| 📊 **Evaluation** | Evaluate retrieval and answer quality with RAGAS metrics |
+| 🧠 **Conversation Memory**    | Maintains context across questions for natural dialogue                     |
+| ❓ **Query Clarification**     | Rewrites ambiguous queries or pauses to ask the user for details            |
+| 🤖 **Agent Orchestration**    | LangGraph coordinates the full retrieval and reasoning workflow             |
+| 🔀 **Multi-Agent Map-Reduce** | Decomposes complex queries into parallel sub-queries                        |
+| ✅ **Self-Correction**         | Re-queries automatically if initial results are insufficient                |
+| 🗜️ **Context Compression**   | Keeps working memory lean across long retrieval loops                       |
+| 🔍 **Observability**          | Track LLM calls, tool usage, and graph execution with Langfuse              |
+| 📊 **Evaluation**             | Evaluate retrieval and answer quality with RAGAS metrics                    |
 
 ### 🎯 Two Ways to Use This Repo
 
@@ -83,16 +83,14 @@ See [Modular Architecture](#modular-architecture) and [Installation & Usage](#in
 
 Before queries can be processed, documents are split twice for optimal retrieval:
 
-- **Parent Chunks**: Bounded large sections based on Markdown headers (H1, H2, H3)
-- **Child Chunks**: Small, fixed-size pieces derived from parents
-
-> Optional: 🐿️ [**Chunky**](https://github.com/GiovanniPasq/chunky) is an open-source toolkit for reliable RAG pipelines: convert PDFs to Markdown, clean documents, inspect chunks, compare chunking strategies, and enrich metadata before building the vector store.
+> Optional: 🐿️ **[Chunky](https://github.com/GiovanniPasq/chunky)** is an open-source toolkit for reliable RAG pipelines: convert PDFs to Markdown, clean documents, inspect chunks, compare chunking strategies, and enrich metadata before building the vector store.
 
 This combines the **precision of small chunks** for search with the **contextual richness of large chunks** for answer generation.
 
----
+***
 
 ### Query Processing: Four-Stage Intelligent Workflow
+
 ```
 User Query → Conversation Summary → Query Rewriting → Query Clarification →
 Parallel Agent Reasoning → Aggregation → Final Response
@@ -108,7 +106,7 @@ Parallel Agent Reasoning → Aggregation → Final Response
 
 **Stage 4 — Response Generation:** Aggregates all agent responses into a single coherent answer.
 
----
+***
 
 ## LLM Provider Configuration
 
@@ -128,9 +126,10 @@ from langchain_ollama import ChatOllama
 
 llm = ChatOllama(model="granite4.1:8b", temperature=0, seed=42)
 ```
+
 > ⚠️ For reliable tool calling and instruction following, prefer models **8B+**. Smaller models may ignore retrieval instructions or hallucinate. See [Troubleshooting](#troubleshooting).
 
----
+***
 
 ### Cloud Providers
 
@@ -138,9 +137,11 @@ llm = ChatOllama(model="granite4.1:8b", temperature=0, seed=42)
 <summary>Click to expand</summary>
 
 **OpenAI GPT:**
+
 ```bash
 pip install -qU langchain-openai
 ```
+
 ```python
 from langchain_openai import ChatOpenAI
 import os
@@ -150,9 +151,11 @@ llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 ```
 
 **Anthropic Claude:**
+
 ```bash
 pip install -qU langchain-anthropic
 ```
+
 ```python
 from langchain_anthropic import ChatAnthropic
 import os
@@ -162,9 +165,11 @@ llm = ChatAnthropic(model="claude-sonnet-4-5-20250929", temperature=0)
 ```
 
 **Google Gemini**
+
 ```bash
 pip install -qU langchain-google-genai
 ```
+
 ```python
 import os
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -172,27 +177,28 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 os.environ["GOOGLE_API_KEY"] = "your-api-key-here"
 llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0)
 ```
+
 </details>
 
----
+***
 
 ## Implementation
 
 Additional details, extended explanations, and Langfuse observability are available in the **[notebook](notebooks/agentic_rag.ipynb)** and full project. The companion **[evaluation notebook](notebooks/evaluation.ipynb)** scores the final answers and the actual child/parent tool outputs used by the agent with direct RAGAS metric calls.
 
-| Step | Description |
-|------|-------------|
-| 1 | [Initial Setup and Configuration](#step-1-initial-setup-and-configuration) |
-| 2 | [Configure Vector Database](#step-2-configure-vector-database) |
-| 3 | [PDFs to Markdown](#step-3-pdfs-to-markdown) |
-| 4 | [Hierarchical Document Indexing](#step-4-hierarchical-document-indexing) |
-| 5 | [Define Agent Tools](#step-5-define-agent-tools) |
-| 6 | [Define System Prompts](#step-6-define-system-prompts) |
-| 7 | [Define State and Data Models](#step-7-define-state-and-data-models) |
-| 8 | [Agent Configuration](#step-8-agent-configuration) |
-| 9 | [Build Graph Node and Edge Functions](#step-9-build-graph-node-and-edge-functions) |
-| 10 | [Build the LangGraph Graphs](#step-10-build-the-langgraph-graphs) |
-| 11 | [Create Chat Interface](#step-11-create-chat-interface) |
+| Step | Description                                                                        |
+| ---- | ---------------------------------------------------------------------------------- |
+| 1    | [Initial Setup and Configuration](#step-1-initial-setup-and-configuration)         |
+| 2    | [Configure Vector Database](#step-2-configure-vector-database)                     |
+| 3    | [PDFs to Markdown](#step-3-pdfs-to-markdown)                                       |
+| 4    | [Hierarchical Document Indexing](#step-4-hierarchical-document-indexing)           |
+| 5    | [Define Agent Tools](#step-5-define-agent-tools)                                   |
+| 6    | [Define System Prompts](#step-6-define-system-prompts)                             |
+| 7    | [Define State and Data Models](#step-7-define-state-and-data-models)               |
+| 8    | [Agent Configuration](#step-8-agent-configuration)                                 |
+| 9    | [Build Graph Node and Edge Functions](#step-9-build-graph-node-and-edge-functions) |
+| 10   | [Build the LangGraph Graphs](#step-10-build-the-langgraph-graphs)                  |
+| 11   | [Create Chat Interface](#step-11-create-chat-interface)                            |
 
 ### Step 1: Initial Setup and Configuration
 
@@ -225,7 +231,7 @@ sparse_embeddings = FastEmbedSparse(model_name="Qdrant/bm25")
 client = QdrantClient(path="qdrant_db")
 ```
 
----
+***
 
 ### Step 2: Configure Vector Database
 
@@ -252,7 +258,7 @@ def ensure_collection(collection_name):
         )
 ```
 
----
+***
 
 ### Step 3: PDFs to Markdown
 
@@ -286,11 +292,12 @@ def pdfs_to_markdowns(path_pattern, overwrite: bool = False):
 pdfs_to_markdowns(f"{DOCS_DIR}/*.pdf")
 ```
 
----
+***
 
 ### Step 4: Hierarchical Document Indexing
 
 Process documents with the Parent/Child splitting strategy.
+
 ```python
 import os
 import glob
@@ -502,7 +509,7 @@ def index_documents():
 index_documents()
 ```
 
----
+***
 
 ### Step 5: Define Agent Tools
 
@@ -576,7 +583,7 @@ def retrieve_parent_chunks(parent_id: str) -> str:
 llm_with_tools = llm.bind_tools([search_child_chunks, retrieve_parent_chunks])
 ```
 
----
+***
 
 ### Step 6: Define System Prompts
 
@@ -776,7 +783,7 @@ You are a final-answer synthesizer for a retrieval-augmented assistant.
 
 </details>
 
----
+***
 
 ### Step 7: Define State and Data Models
 
@@ -825,7 +832,7 @@ class QueryAnalysis(BaseModel):
     clarification_needed: str = Field(description="Explanation if the question is unclear.")
 ```
 
----
+***
 
 ### Step 8: Agent Configuration
 
@@ -862,13 +869,14 @@ def estimate_context_tokens(messages: list) -> int:
     return sum(len(encoding.encode(content)) for content in contents)
 ```
 
----
+***
 
 ### Step 9: Build Graph Node and Edge Functions
 
 Create the processing nodes and edges for the LangGraph workflow.
 
 #### Main Graph Nodes & Edges
+
 ```python
 from langgraph.types import Send, Command
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, RemoveMessage, ToolMessage
@@ -1062,9 +1070,10 @@ def aggregate_answers(state: State):
     return {"messages": removals + [AIMessage(content=synthesis_response.content)]}
 ```
 
----
+***
 
 #### Agent Subgraph Nodes & Edges
+
 ```python
 def orchestrator(state: AgentState):
     context_summary = state.get("context_summary", "").strip()
@@ -1224,14 +1233,8 @@ def collect_answer(state: AgentState):
 ```
 
 **Why this architecture?**
-- **Summarization** maintains conversational context without overwhelming the LLM
-- **Query rewriting** ensures search queries are precise and unambiguous, using context intelligently
-- **Human-in-the-loop** catches unclear queries before wasting any retrieval resources
-- **Parallel execution** via `Send` API spawns independent agent subgraphs for each sub-question simultaneously
-- **Context compression** keeps the agent's working memory lean across long retrieval loops, preventing redundant fetches
-- **Fallback response** ensures graceful degradation — the agent always returns something useful even when the budget runs out
-- **Answer collection & aggregation** extracts clean final answers from agents and aggregates them into a single coherent response
----
+
+***
 
 ### Step 10: Build the LangGraph Graphs
 
@@ -1282,23 +1285,10 @@ agent_graph = graph_builder.compile(checkpointer=checkpointer, interrupt_before=
 The architecture flow diagram can be viewed **[here](./assets/agentic_rag_workflow.png)**.
 
 **Agent Subgraph** (processes individual questions):
-- START → `orchestrator` (invoke LLM with tools)
-- `orchestrator` → `tools` (if tool calls needed) OR `fallback_response` (if budget exhausted) OR `collect_answer` (if done)
-- `tools` → `should_compress_context` (check token budget)
-- `should_compress_context` → `compress_context` (if threshold exceeded) OR `orchestrator` (otherwise)
-- `compress_context` → `orchestrator` (resume with compressed memory)
-- `fallback_response` → `collect_answer` (package best-effort answer)
-- `collect_answer` → END (clean final answer with index)
 
 **Main Graph** (orchestrates complete workflow):
-- START → `summarize_history` (roll older chat into summary and keep only recent exchanges)
-- `summarize_history` → `rewrite_query` (rewrite query with context, check clarity)
-- `rewrite_query` → `request_clarification` (if unclear) OR spawn parallel `agent` subgraphs via `Send` (if clear)
-- `request_clarification` → `rewrite_query` (after user provides clarification)
-- All `agent` subgraphs → `aggregate_answers` (merge all responses)
-- `aggregate_answers` → END (return final synthesized answer)
 
----
+***
 
 ### Step 11: Create Chat Interface
 
@@ -1343,13 +1333,14 @@ demo.launch(theme=gr.themes.Citrus())
 
 **You're done!** You now have a fully functional Agentic RAG system with conversation memory, hierarchical indexing, and human-in-the-loop query clarification.
 
----
+***
 
 ## Modular Architecture
 
 The app (`project/` folder) is organized into modular components — each independently swappable without breaking the system.
 
 ### 📂 Project Structure
+
 ```
 project/
 ├── app.py                    # Main Gradio application entry point
@@ -1366,7 +1357,7 @@ Full documentation in [project/README.md](./project/README.md).
 
 ## Installation & Usage
 
-Sample pdf files can be found here: [javascript](https://www.tutorialspoint.com/javascript/javascript_tutorial.pdf), [blockchain](https://blockchain-observatory.ec.europa.eu/document/download/1063effa-59cc-4df4-aeee-d2cf94f69178_en?filename=Blockchain_For_Beginners_A_EUBOF_Guide.pdf), [fortinet](https://www.commoncriteriaportal.org/files/epfiles/Fortinet%20FortiGate_EAL4_ST_V1.5.pdf(320893)_TMP.pdf).
+Sample pdf files can be found here: [javascript](https://www.tutorialspoint.com/javascript/javascript_tutorial.pdf), [blockchain](https://blockchain-observatory.ec.europa.eu/document/download/1063effa-59cc-4df4-aeee-d2cf94f69178_en?filename=Blockchain_For_Beginners_A_EUBOF_Guide.pdf), [fortinet](https://www.commoncriteriaportal.org/files/epfiles/Fortinet%20FortiGate_EAL4_ST_V1.5.pdf\(320893\)_TMP.pdf).
 
 ### Option 1: Quickstart Notebook (Recommended for Testing)
 
@@ -1379,6 +1370,7 @@ The chat interface will appear at the end.
 ### Option 2: Full Python Project (Recommended for Development)
 
 #### 1. Install Dependencies
+
 ```bash
 # Clone the repository
 git clone https://github.com/GiovanniPasq/agentic-rag-for-dummies
@@ -1395,6 +1387,7 @@ uv pip install -r requirements.txt
 ```
 
 #### 2. Run the Application
+
 ```bash
 python project/app.py
 ```
@@ -1403,7 +1396,7 @@ python project/app.py
 
 Open the local URL (e.g., `http://127.0.0.1:7860`) to start chatting.
 
----
+***
 
 ### Option 3: Docker Deployment
 
@@ -1412,6 +1405,7 @@ See [`project/README.md`](./project/README.md#Docker-Deployment) for full Docker
 ### Example Conversations
 
 **With Conversation Memory:**
+
 ```
 User: "How do I install SQL?"
 Agent: [Provides installation steps from documentation]
@@ -1421,6 +1415,7 @@ Agent: [Understands "it" = SQL, provides update instructions]
 ```
 
 **With Query Clarification:**
+
 ```
 User: "Tell me about that thing"
 Agent: "I need more information. What specific topic are you asking about?"
@@ -1429,19 +1424,23 @@ User: "The installation process for PostgreSQL"
 Agent: [Retrieves and answers with specific information]
 ```
 
----
+***
 
 ## Troubleshooting
 
-| Area | Common Problems | Suggested Solutions |
-|------|----------------|------------------|
-| **Model Selection** | - Responses ignore instructions<br>- Tools (retrieval/search) used incorrectly<br>- Poor context understanding<br>- Hallucinations or incomplete aggregation | - Use more capable LLMs<br>- Prefer models 8B+ for better reasoning<br>- Consider cloud-based models if local models are limited |
-| **System Prompt Behavior** | - Model answers without retrieving documents<br>- Query rewriting loses context<br>- Aggregation introduces hallucinations | - Make retrieval explicit in system prompts<br>- Keep query rewriting close to user intent |
-| **Retrieval Configuration** | - Relevant documents not retrieved<br>- Too much irrelevant information | - Increase retrieved chunks (`k`) or lower similarity thresholds to improve recall<br>- Reduce `k` or increase thresholds to improve precision |
-| **Chunk Size / Document Splitting** | - Answers lack context or feel fragmented<br>- Retrieval is slow or embedding costs are high | - Increase chunk & parent sizes for more context<br>- Decrease chunk sizes to improve speed and reduce costs |
-| **Context Compression** | - Agent loses important details after compression<br>- Compressed summaries are too vague | - Tune the compression system prompt<br>- Increase `BASE_TOKEN_THRESHOLD` to delay compression<br>- Increase `TOKEN_GROWTH_FACTOR` |
-| **Agent Configuration** | - Agent gives up too early <br>- Agent loops too long| - Increase `MAX_TOOL_CALLS` / `MAX_ITERATIONS` for complex queries<br>- Decrease them to speed up simple queries |
-| **Temperature & Consistency** | - Responses inconsistent or overly creative<br>- Responses too rigid or repetitive | - Set temperature to `0` for factual, consistent output<br>- Slightly increase temperature for summarization or analysis tasks |
-| **Embedding Model Quality** | - Poor semantic search<br>- Weak performance on domain-specific or multilingual docs | - Use higher-quality or domain-specific embeddings<br>- Re-index all documents after changing embeddings |
+| Area                                | Common Problems                                                                                                                                  | Suggested Solutions                                                                                                                        |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Model Selection**                 | - Responses ignore instructions- Tools (retrieval/search) used incorrectly- Poor context understanding- Hallucinations or incomplete aggregation | - Use more capable LLMs- Prefer models 8B+ for better reasoning- Consider cloud-based models if local models are limited                   |
+| **System Prompt Behavior**          | - Model answers without retrieving documents- Query rewriting loses context- Aggregation introduces hallucinations                               | - Make retrieval explicit in system prompts- Keep query rewriting close to user intent                                                     |
+| **Retrieval Configuration**         | - Relevant documents not retrieved- Too much irrelevant information                                                                              | - Increase retrieved chunks (`k`) or lower similarity thresholds to improve recall- Reduce `k` or increase thresholds to improve precision |
+| **Chunk Size / Document Splitting** | - Answers lack context or feel fragmented- Retrieval is slow or embedding costs are high                                                         | - Increase chunk & parent sizes for more context- Decrease chunk sizes to improve speed and reduce costs                                   |
+| **Context Compression**             | - Agent loses important details after compression- Compressed summaries are too vague                                                            | - Tune the compression system prompt- Increase `BASE_TOKEN_THRESHOLD` to delay compression- Increase `TOKEN_GROWTH_FACTOR`                 |
+| **Agent Configuration**             | - Agent gives up too early - Agent loops too long                                                                                                | - Increase `MAX_TOOL_CALLS` / `MAX_ITERATIONS` for complex queries- Decrease them to speed up simple queries                               |
+| **Temperature & Consistency**       | - Responses inconsistent or overly creative- Responses too rigid or repetitive                                                                   | - Set temperature to `0` for factual, consistent output- Slightly increase temperature for summarization or analysis tasks                 |
+| **Embedding Model Quality**         | - Poor semantic search- Weak performance on domain-specific or multilingual docs                                                                 | - Use higher-quality or domain-specific embeddings- Re-index all documents after changing embeddings                                       |
 
 > 💡 **For additional troubleshooting tips** see the [README Troubleshooting](./project/README.md#troubleshooting).
+
+用镜像跑hugging face 的embedding模型
+
+\$env:HF\_ENDPOINT="<https://hf-mirror.com>"
